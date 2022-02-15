@@ -10,7 +10,6 @@ class RecipesController < ApplicationController
 
   private
 
-    # Only allow with_ingredients params through
     def with_ingredients
       params.fetch(:with_ingredients, []).reject(&:blank?)
     end
