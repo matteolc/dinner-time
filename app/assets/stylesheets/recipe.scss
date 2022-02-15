@@ -1,0 +1,20 @@
+.recipe-card {
+    min-width: 480px;
+    padding: 12px;
+    flex-basis: content;
+    border-radius: 4px;
+    background-color: var(--color-background);
+    flex-grow: 2;
+}
+
+.recipe-card .tag-list span {
+    padding: 2px 8px;
+    margin: 2px;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+}
+
+.recipe-card .tag-list {
+    margin-top: 6px;
+    margin-bottom: 12px;
+}

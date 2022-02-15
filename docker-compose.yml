@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  dinner-time-basic:
+    container_name: dinner-time-basic
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+      - ./bundle:/usr/local/bundle
+    ports:
+      - 5040:3000
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=12345678
+      - DATABASE_HOST=dinner-time-basic-data
+    restart: on-failure
+    depends_on:
+      - dinner-time-basic-data
+  dinner-time-basic-data:
+    container_name: dinner-time-basic-data
+    image: postgres:12
+    restart: on-failure
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 12345678
