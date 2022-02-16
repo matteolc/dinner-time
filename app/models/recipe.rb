@@ -39,20 +39,35 @@
 
 class Recipe < ApplicationRecord
 
+    # unaccent everything
     scope :with_ingredients, ->(*ingredients) { 
-        where("to_tsvector(unaccent(ARRAY_TO_STRING(ingredients,','))) @@ to_tsquery(unaccent(?))", "'#{ingredients.join(' & ')}'") 
+        where("to_tsvector(unaccent(ARRAY_TO_STRING(ingredients,','))) @@ to_tsquery(unaccent(?))", ingredients.join(' & ')) 
     }    
-    
-    # search with cache
-    def self.search(with_ingredients_params)   
-        ids = Rails.cache.fetch(with_ingredients_params || Recipe.to_s.pluralize.downcase, expires_in: 12.hours) do
+
+    # Search recipes with ingredients, with caching
+    # q can be an empty string (no filter is applied)
+    def self.search(q)
+        raise StandardError.new 'q is not a string' if !(q.is_a? String)
+        sanitized_q = sanitize_q(q)
+        ids = Rails.cache.fetch(sanitized_q, expires_in: 12.hours) do
             results = all
-            results = results.with_ingredients(with_ingredients_params) unless with_ingredients_params.blank?
+            results = results.with_ingredients(sanitized_q) unless sanitized_q.blank?
             results.pluck(:id) 
         end   
-        where(id: ids)
-    rescue
-        where(nil)
+        where(id: ids)   
+    rescue => e
+        puts "Error: #{e}"
+        none
+    end        
+
+    # enforce some validation rules on user input
+    def self.sanitize_q(q)
+        PragmaticTokenizer::Tokenizer.new.tokenize(I18n.transliterate(q))
+            .map {|word| Search.keep_only_letters(word) }
+            .map {|word| word.split(' ') }                   
+            .flatten
+            .map {|word| Search.strip_sql_reserved_words(word) }
+            .reject(&:blank?)
     end    
 
 

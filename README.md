@@ -34,11 +34,14 @@
 # apt-get update
 # apt-get install -y yarn
 # gem install rails -v 6.1.4.4
-# rails new app -d postgresql --webpack=react --skip-action-mailer --skip-action-mailbox --skip-action-text --skip-active-job --skip-active-storage --skip-action-cable
+# rails new app -d postgresql --webpack=react --skip-action-mailer --skip-action-mailbox --skip-action-text --skip-active-job --skip-active-storage --skip-action-cable --skip-test
 # cd app
-# bundle add react-rails pagy
+# bundle add react-rails pagy pragmatic_tokenizer
 # bundle add annotate --group=development
+# bundle add factory_bot_rails rspec-rails --group=development,test
+# bundle add faker --group=test
 # bundle exec rails g annotate:install
+# bundle exec rails g rspec:install
 # yarn add lodash uglifyjs-webpack-plugin
 # yarn add @types/lodash @types/react @types/react-dom --dev
 # rails webpacker:install:typescript

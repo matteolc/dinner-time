@@ -1,48 +1,33 @@
-import { compact, pullAt, times } from "lodash";
+import { isEmpty } from "lodash";
 import React, { useState } from "react";
 import useParams from "./hooks/useParams";
-import TextInput from "./inputs/TextInput";
 
-/**
- *
- * @param param0
- * @returns
- */
+
 export default function Search() {
   const params = useParams();
-  let defaultValues: string[] | [] = params.getAll(`with_ingredients[]`);
-  const [inputs, setInputs] = useState<string[] | []>(defaultValues);
+  const defaultValue: string | null = params.get("q");
+  const [value, setValue] = useState<string|null>(defaultValue);
+
+  const isValid = (input: string | null) => (
+    !isEmpty(input)
+  )
 
   return (
-    <form id="recipe-search-form" key="recipe-search-form">
+    <form id="recipe-search-form" key="recipe-search-form" style={{flexDirection: 'row'}}>
       <fieldset>
-        <a
-          className="button"
-          style={{ marginBottom: 12 }}
-          onClick={() => setInputs([...inputs, ""])}
-        >
-          Add an ingredient to search..
-        </a>
-        {times(inputs.length, (i: number) => (
-          <TextInput
-            placeholder="Type an ingredient.."
-            defaultValue={inputs[i]}
-            id={`with_ingredients-${i}`}
-            name="with_ingredients[]"
-            key={`with_ingredients-${i}`}
-            onClick={() => {
-              pullAt(inputs, [i]);
-              setInputs([...inputs]);
-            }}
-          />
-        ))}
+        <input
+            placeholder="Type one or more ingredients..."
+            type="text"
+            id="q"
+            value={value || undefined}
+            onChange={(e) => setValue(e.target.value)}
+            name="q"
+        />
       </fieldset>
 
-      {inputs.length > 0 && (
-        <button className="button" type="submit">
-          Search
-        </button>
-      )}
+      <button disabled={!isValid(value)} className="button" type="submit">
+        Search
+      </button>
     </form>
   );
 }

@@ -19,13 +19,15 @@
                 <h1 class="home-link">
                     <%= link_to "Dinner Time", recipes_path %>
                 </h1>
+                <br/>
+                <div class="recipes-filters">
+                    <%= render partial: "recipes/search" %> 
+                </div>                
             </div>
         </header>
         <main class="recipes-main">
             <div class="container">
-                <div class="recipes-filters">
-                    <%= render partial: "recipes/search" %> 
-                </div>
+
                 <div class="recipes-outlet">
                     <%= yield %>
                 </div>

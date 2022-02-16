@@ -4,14 +4,14 @@ class RecipesController < ApplicationController
 
   # GET /recipes or /recipes.json
   def index 
-    @pagy, @recipes = pagy(Recipe.search(with_ingredients)) 
+    @pagy, @recipes = pagy(Recipe.search(q)) 
     @count, @items, @pages, @page = pagy_metadata(@pagy).values_at(:count, :items, :pages, :page)
   end
 
   private
 
-    def with_ingredients
-      params.fetch(:with_ingredients, []).reject(&:blank?)
-    end
+    def q
+      params.fetch(:q, '')
+    end    
 
 end
