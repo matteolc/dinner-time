@@ -1,5 +1,7 @@
 # Dinner Time
 
+Live on [Heroku](https://boiling-shore-95487.herokuapp.com/)
+
 - Ruby 3 and Rails 6.1.4.4
 - React 17 (`react-rails`)
 - Typescript
@@ -7,7 +9,7 @@
 ## User stories
 
 - A user can browse through all recipes
-- A user can search and browse recipes by adding one or more ingredients
+- A user can search and browse recipes by searching for one or more ingredients
 
 ## Technical details
 
@@ -16,7 +18,7 @@
 - Accents do not impact search results
 - Memory cache is used to speed-up page load times
 - The classic `form GET` design brings state-less functional components and history navigation (a user can navigate back and forth with browser history without loosing state)
-- Basic styles have been added without too much work (adapted from existing ones I use)
+- Basic styles have been added by adapting existing ones I use
 
 ## Configuration
 
@@ -71,6 +73,7 @@
 - Created a recipe layout in `views/layouts/recipes.html.erb`
 - Created recipe listing views in `views/recipes`
 - Created React components in `app/javascript/packs/components`
+- Created tests
 
 ### Getting ready for production
 
@@ -90,7 +93,11 @@
 > bundle exec rake db:seed
 ```
 
-## How to run the test suite
+## Running tests
+
+```
+> bundle exec rspec
+```
 
 ## Services
 
