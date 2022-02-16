@@ -34,6 +34,22 @@ describe Recipe, type: :model do
             search = Recipe.search(search_vector)
             search_ids = search.map {|recipe| recipe.id}
             expect(search_ids.find { |id| id === @recipe.id }).to_not be_nil
+        end   
+        
+
+        it 'should search for recipes with an ingredient, regardless of case' do
+            search_vector = @ingredients.sample().upcase
+            search = Recipe.search(search_vector)
+            search_ids = search.map {|recipe| recipe.id}
+            expect(search_ids.find { |id| id === @recipe.id }).to_not be_nil
+        end        
+
+        it 'should search for recipes with an ingredient, regardless of accent' do
+            accented_recipe = create(:accented_recipe)
+            search_vector = I18n.transliterate(get_recipe_ingredients(accented_recipe).sample())
+            search = Recipe.search(search_vector)
+            search_ids = search.map {|recipe| recipe.id}
+            expect(search_ids.find { |id| id === accented_recipe.id }).to_not be_nil
         end    
 
         it 'should search for recipes with more ingredients' do

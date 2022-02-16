@@ -14,5 +14,9 @@ FactoryBot.define do
     rate { Faker::Number.between(from: 1, to: 5) }
     tags { 2.times.map { Faker::Food.ethnic_category } }
     total_time { Faker::Types.rb_string }
+
+    factory :accented_recipe do
+      ingredients { ['mùstard', 'fûel', 'ünknown', 'maÿbe', 'àctual', 'sâpiens', 'mælevolent', 'çabbage', 'émoji', 'èxtra', 'fêta', 'chëëse', 'maïs', 'metrîc', 'pôule', 'bœef'] }
+    end
   end
 end
