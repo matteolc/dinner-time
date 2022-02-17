@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :recipe do
     name { Faker::Food.dish }
@@ -16,7 +18,9 @@ FactoryBot.define do
     total_time { Faker::Types.rb_string }
 
     factory :accented_recipe do
-      ingredients { ['mùstard', 'fûel', 'ünknown', 'maÿbe', 'àctual', 'sâpiens', 'mælevolent', 'çabbage', 'émoji', 'èxtra', 'fêta', 'chëëse', 'maïs', 'metrîc', 'pôule', 'bœef'] }
+      ingredients do
+        %w[mùstard fûel ünknown maÿbe àctual sâpiens mælevolent çabbage émoji èxtra fêta chëëse maïs metrîc pôule bœef]
+      end
     end
   end
 end

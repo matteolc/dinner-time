@@ -1,0 +1,13 @@
+AllCops:
+  Exclude:
+    - bundle/**/*
+    - bin/**/*
+    - lib/tasks/**/*
+Layout/LineLength:
+  Max: 140
+Metrics/MethodLength:
+  Max: 20
+Metrics/BlockLength:
+  Max: 60
+Style/Documentation:
+  Enabled: false
