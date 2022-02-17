@@ -1,3 +1,30 @@
+# == Schema Information
+#
+# Table name: recipes
+#
+#  id              :bigint           not null, primary key
+#  author          :string           not null
+#  author_tip      :string           not null
+#  budget          :string           not null
+#  cook_time       :string           not null
+#  difficulty      :string           not null
+#  image           :string           not null
+#  ingredients     :string           not null, is an Array
+#  name            :string           not null
+#  nb_comments     :string           not null
+#  people_quantity :string
+#  prep_time       :string           not null
+#  rate            :string
+#  tags            :string           not null, is an Array
+#  total_time      :string           not null
+#
+# Indexes
+#
+#  index_recipes_on_id         (id)
+#  recipes_ingredients_en_idx  (to_tsvector('ts_unaccent_en'::regconfig, f_array_to_string((ingredients)::text[]))) USING gin
+#  recipes_ingredients_fr_idx  (to_tsvector('ts_unaccent_fr'::regconfig, f_array_to_string((ingredients)::text[]))) USING gin
+#  recipes_ingredients_idx     (to_tsvector('ts_unaccent'::regconfig, f_array_to_string((ingredients)::text[]))) USING gin
+#
 require 'rails_helper'
 
 describe Recipe, type: :model do

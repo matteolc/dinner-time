@@ -6,8 +6,9 @@ class Search
 
     # keep only letters in search string
     # replace anything else with a whitespace
+    # return an array with the string split by whitespace
     def self.keep_only_letters(search_string)
-        search_string.gsub(/[^A-Za-z]/, ' ')
+        search_string.gsub(/[^A-Za-z]/, ' ').split(' ')
     end    
 
     # don't let reserved SQL words through
