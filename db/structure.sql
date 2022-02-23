@@ -24,67 +24,78 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 
 
 --
--- Name: fr; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: -
+-- Name: f_array_to_string(text[]); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE TEXT SEARCH CONFIGURATION public.fr (
+CREATE FUNCTION public.f_array_to_string(text[]) RETURNS text
+    LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE
+    AS $_$ 
+      SELECT array_to_string($1, ','); 
+      $_$;
+
+
+--
+-- Name: ts_unaccent_en; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: -
+--
+
+CREATE TEXT SEARCH CONFIGURATION public.ts_unaccent_en (
     PARSER = pg_catalog."default" );
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
-    ADD MAPPING FOR asciiword WITH french_stem;
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
+    ADD MAPPING FOR asciiword WITH english_stem;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
-    ADD MAPPING FOR word WITH public.unaccent, french_stem;
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
+    ADD MAPPING FOR word WITH public.unaccent, english_stem;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR numword WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR email WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR url WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR host WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR sfloat WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR version WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR hword_numpart WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
-    ADD MAPPING FOR hword_part WITH public.unaccent, french_stem;
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
+    ADD MAPPING FOR hword_part WITH public.unaccent, english_stem;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
-    ADD MAPPING FOR hword_asciipart WITH french_stem;
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
+    ADD MAPPING FOR hword_asciipart WITH english_stem;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR numhword WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
-    ADD MAPPING FOR asciihword WITH french_stem;
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
+    ADD MAPPING FOR asciihword WITH english_stem;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
-    ADD MAPPING FOR hword WITH public.unaccent, french_stem;
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
+    ADD MAPPING FOR hword WITH public.unaccent, english_stem;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR url_path WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR file WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR "float" WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR "int" WITH simple;
 
-ALTER TEXT SEARCH CONFIGURATION public.fr
+ALTER TEXT SEARCH CONFIGURATION public.ts_unaccent_en
     ADD MAPPING FOR uint WITH simple;
 
 
@@ -194,17 +205,10 @@ CREATE INDEX index_recipes_on_id ON public.recipes USING btree (id);
 
 
 --
--- Name: index_recipes_on_ingredients; Type: INDEX; Schema: public; Owner: -
+-- Name: recipes_ingredients_en_idx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_recipes_on_ingredients ON public.recipes USING btree (ingredients);
-
-
---
--- Name: recipes_ingredients_gin_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX recipes_ingredients_gin_idx ON public.recipes USING gin (ingredients);
+CREATE INDEX recipes_ingredients_en_idx ON public.recipes USING gin (to_tsvector('public.ts_unaccent_en'::regconfig, public.f_array_to_string((ingredients)::text[])));
 
 
 --
@@ -215,6 +219,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20220215140952'),
+('20220215140960'),
 ('20220215141025'),
 ('20220215142347');
 

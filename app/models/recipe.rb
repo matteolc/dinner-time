@@ -1,22 +1,29 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: recipes
 #
-#  id                 :bigint           not null, primary key
-#  author             :string           not null
-#  author_tip         :string           not null
-#  budget             :string           not null
-#  cook_time          :string           not null
-#  difficulty         :string           not null
-#  image              :string           not null
-#  ingredients        :string           not null, is an Array
-#  name               :string           not null
-#  nb_comments        :string           not null
-#  people_quantity    :string
-#  prep_time          :string           not null
-#  rate               :string
-#  tags               :string           not null, is an Array
-#  total_time         :string           not null
+#  id              :bigint           not null, primary key
+#  author          :string           not null
+#  author_tip      :string           not null
+#  budget          :string           not null
+#  cook_time       :string           not null
+#  difficulty      :string           not null
+#  image           :string           not null
+#  ingredients     :string           not null, is an Array
+#  name            :string           not null
+#  nb_comments     :string           not null
+#  people_quantity :string
+#  prep_time       :string           not null
+#  rate            :string
+#  tags            :string           not null, is an Array
+#  total_time      :string           not null
+#
+# Indexes
+#
+#  index_recipes_on_id         (id)
+#  recipes_ingredients_en_idx  (to_tsvector('ts_unaccent_en'::regconfig, f_array_to_string((ingredients)::text[]))) USING gin
 #
 
 # https://github.com/remaudcorentin-dev/python-marmiton
@@ -38,37 +45,27 @@
 # tags: string list, tags of the recipe
 
 class Recipe < ApplicationRecord
+  
+  scope :with_ingredients_en_sql_ranked, lambda { |*ingredients|
+    find_by_sql(
+"SELECT recipes.*
+FROM recipes
+    INNER JOIN (
+      SELECT recipes.id AS pg_search_id,
+      #{Search.ts_rank_string(Search.ts_vector_unaccent_string('ingredients'), ingredients.join(' | '))} AS rank
+      FROM recipes
+      WHERE (#{Search.ts_vector_query_string(Search.ts_vector_unaccent_string('ingredients'), ingredients.join(' | '))})
+    ) AS pg_search_result    
+ON recipes.id = pg_search_result.pg_search_id
+ORDER BY pg_search_result.rank DESC"
+) }
 
-    # unaccent everything
-    scope :with_ingredients, ->(*ingredients) { 
-        where("to_tsvector(unaccent(ARRAY_TO_STRING(ingredients,','))) @@ to_tsquery(unaccent(?))", ingredients.join(' & ')) 
-    }    
-
-    # Search recipes with ingredients, with caching
-    # q can be an empty string (no filter is applied)
-    def self.search(q)
-        raise StandardError.new 'q is not a string' if !(q.is_a? String)
-        sanitized_q = sanitize_q(q)
-        ids = Rails.cache.fetch(sanitized_q, expires_in: 12.hours) do
-            results = all
-            results = results.with_ingredients(sanitized_q) unless sanitized_q.blank?
-            results.pluck(:id) 
-        end   
-        where(id: ids)   
-    rescue => e
-        puts "Error: #{e}"
-        none
-    end        
-
-    # enforce some validation rules on user input
-    def self.sanitize_q(q)
-        PragmaticTokenizer::Tokenizer.new.tokenize(I18n.transliterate(q))
-            .map {|word| Search.keep_only_letters(word) }
-            .map {|word| word.split(' ') }                   
-            .flatten
-            .map {|word| Search.strip_sql_reserved_words(word) }
-            .reject(&:blank?)
-    end    
+  scope :search_scope_en_sql_ranked, lambda { |q_string| 
+    sanitized_q = Search.sanitize_q(q_string)
+    sanitized_q.blank? ? 
+      find_by_sql("SELECT recipes.* FROM recipes") : 
+      with_ingredients_en_sql_ranked(sanitized_q)
+  }
 
 
 end

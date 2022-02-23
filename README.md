@@ -2,7 +2,7 @@
 
 Live on [Heroku](https://boiling-shore-95487.herokuapp.com/)
 
-DB structure [here](https://github.com/matteolc/dinner-time/blob/main/db/structure.sql)
+DB structure [here](https://github.com/matteolc/dinner-time/blob/next/db/structure.sql)
 
 - Ruby 3 and Rails 6.1.4.4
 - React 17 (`react-rails`)
