@@ -45,29 +45,27 @@
 # tags: string list, tags of the recipe
 
 class Recipe < ApplicationRecord
-  # unaccent everything
-  scope :with_ingredients_en, lambda { |*ingredients|
-    where(
-      "to_tsvector('ts_unaccent_en', f_array_to_string(ingredients)) @@ to_tsquery('ts_unaccent_en', ?)",
-      ingredients.join(' & ')
-    )
+  
+  scope :with_ingredients_en_sql_ranked, lambda { |*ingredients|
+    find_by_sql(
+"SELECT recipes.*
+FROM recipes
+    INNER JOIN (
+      SELECT recipes.id AS pg_search_id,
+      #{Search.ts_rank_string(Search.ts_vector_unaccent_string('ingredients'), ingredients.join(' | '))} AS rank
+      FROM recipes
+      WHERE (#{Search.ts_vector_query_string(Search.ts_vector_unaccent_string('ingredients'), ingredients.join(' | '))})
+    ) AS pg_search_result    
+ON recipes.id = pg_search_result.pg_search_id
+ORDER BY pg_search_result.rank DESC"
+) }
+
+  scope :search_scope_en_sql_ranked, lambda { |q_string| 
+    sanitized_q = Search.sanitize_q(q_string)
+    sanitized_q.blank? ? 
+      find_by_sql("SELECT recipes.* FROM recipes") : 
+      with_ingredients_en_sql_ranked(sanitized_q)
   }
 
-  # Search recipes with ingredients, with caching
-  # q can be an empty string (no filter is applied)
-  def self.search(q_string)
-    sanitized_q = Search.sanitize_q(q_string)
-    ids = Rails.cache.fetch(
-      sanitized_q.blank? ? name : Search.key_for(sanitized_q),
-      expires_in: 12.hours
-    ) do
-      results = all
-      results = results.with_ingredients_en(sanitized_q) unless sanitized_q.blank?
-      results.pluck(:id)
-    end
-    where(id: ids)
-  rescue StandardError => e
-    puts "Error: #{e}"
-    none
-  end
+
 end

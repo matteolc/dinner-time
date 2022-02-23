@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
 
   # GET /recipes or /recipes.json
   def index
-    @pagy, @recipes = pagy(Recipe.search(q))
+    @pagy, @recipes = pagy_array(Recipe.search_scope_en_sql_ranked(q))
     @count, @items, @pages, @page = pagy_metadata(@pagy).values_at(:count, :items, :pages, :page)
   end
 

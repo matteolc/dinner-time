@@ -105,4 +105,29 @@ class Search
   def self.key_for(*words)
     words.join('-')
   end
+
+  def self.ts_vector_unaccent_string(property)
+    "to_tsvector('ts_unaccent_en', f_array_to_string(" + property + "))"
+  end
+
+  def self.ts_query_unaccent_string
+    "to_tsquery('ts_unaccent_en', ?)"
+  end
+
+  # Since a longer document has a greater chance of containing a query term 
+  # it is reasonable to take into account document size, e.g., 
+  # a hundred-word document with five instances of a search word is probably 
+  # more relevant than a thousand-word document with five instances. 
+  # Ranking functions take an integer normalization option that 
+  # specifies whether and how a document's length should impact its rank. 
+  # 
+  # 2 divides the rank by the document length
+  def self.ts_rank_string(ts_vector, value)
+    "ts_rank((#{ts_vector}), (#{ts_query_unaccent_string.gsub('?', "'#{value}'")}), 2)"
+  end
+
+  def self.ts_vector_query_string(ts_vector, value)
+    [ts_vector, "@@", ts_query_unaccent_string.gsub('?', "'#{value}'")].join(' ')
+  end
+
 end

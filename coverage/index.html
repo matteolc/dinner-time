@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2022-02-17T20:28:48+00:00">2022-02-17T20:28:48+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2022-02-23T15:34:48+00:00">2022-02-23T15:34:48+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -30,7 +30,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         53.86
+         53.37
        </span>
     </span> hits/line
     )
@@ -117,7 +117,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#fb248217898ccc5f9ad4f29010f93c2040ed955d" class="src_link" title="app/models/recipe.rb">app/models/recipe.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">75</td>
+            <td class="cell--number">73</td>
             <td class="cell--number">13</td>
             <td class="cell--number">13</td>
             <td class="cell--number">0</td>
@@ -132,7 +132,7 @@
             <td class="cell--number">15</td>
             <td class="cell--number">15</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">356.00</td>
+            <td class="cell--number">351.60</td>
             
           </tr>
         
@@ -1179,7 +1179,7 @@
 
             
 
-            <code class="ruby">#  recipes_ingredients_fr_idx  (to_tsvector(&#39;ts_unaccent_fr&#39;::regconfig, f_array_to_string((ingredients)::text[]))) USING gin</code>
+            <code class="ruby">#</code>
           </li>
         </div>
       
@@ -1190,7 +1190,7 @@
 
             
 
-            <code class="ruby">#  recipes_ingredients_idx     (to_tsvector(&#39;ts_unaccent&#39;::regconfig, f_array_to_string((ingredients)::text[]))) USING gin</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -1201,7 +1201,7 @@
 
             
 
-            <code class="ruby">#</code>
+            <code class="ruby"># https://github.com/remaudcorentin-dev/python-marmiton</code>
           </li>
         </div>
       
@@ -1212,7 +1212,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">#</code>
           </li>
         </div>
       
@@ -1223,7 +1223,7 @@
 
             
 
-            <code class="ruby"># https://github.com/remaudcorentin-dev/python-marmiton</code>
+            <code class="ruby"># name: name of the recipe</code>
           </li>
         </div>
       
@@ -1234,7 +1234,7 @@
 
             
 
-            <code class="ruby">#</code>
+            <code class="ruby"># ingredients: string list of the recipe ingredients (including quantities)</code>
           </li>
         </div>
       
@@ -1245,7 +1245,7 @@
 
             
 
-            <code class="ruby"># name: name of the recipe</code>
+            <code class="ruby"># steps: string list of each step of the recipe</code>
           </li>
         </div>
       
@@ -1256,7 +1256,7 @@
 
             
 
-            <code class="ruby"># ingredients: string list of the recipe ingredients (including quantities)</code>
+            <code class="ruby"># image: if exists, image of the recipe (url).</code>
           </li>
         </div>
       
@@ -1267,7 +1267,7 @@
 
             
 
-            <code class="ruby"># steps: string list of each step of the recipe</code>
+            <code class="ruby"># cook_time: string, cooking time of the recipe</code>
           </li>
         </div>
       
@@ -1278,7 +1278,7 @@
 
             
 
-            <code class="ruby"># image: if exists, image of the recipe (url).</code>
+            <code class="ruby"># prep_time: string, estimated preparation time of the recipe</code>
           </li>
         </div>
       
@@ -1289,7 +1289,7 @@
 
             
 
-            <code class="ruby"># cook_time: string, cooking time of the recipe</code>
+            <code class="ruby"># total_time: string, estimated total time of the recipe (cooking + preparation time)</code>
           </li>
         </div>
       
@@ -1300,7 +1300,7 @@
 
             
 
-            <code class="ruby"># prep_time: string, estimated preparation time of the recipe</code>
+            <code class="ruby"># author: string, name of the author of the recipe</code>
           </li>
         </div>
       
@@ -1311,7 +1311,7 @@
 
             
 
-            <code class="ruby"># total_time: string, estimated total time of the recipe (cooking + preparation time)</code>
+            <code class="ruby"># nb_comments: string, number of comments/rates left by users</code>
           </li>
         </div>
       
@@ -1322,7 +1322,7 @@
 
             
 
-            <code class="ruby"># author: string, name of the author of the recipe</code>
+            <code class="ruby"># people_quantity: string, number of people the recipie is made for</code>
           </li>
         </div>
       
@@ -1333,7 +1333,7 @@
 
             
 
-            <code class="ruby"># nb_comments: string, number of comments/rates left by users</code>
+            <code class="ruby"># budget: string, indicate the category of budget according to the website</code>
           </li>
         </div>
       
@@ -1344,7 +1344,7 @@
 
             
 
-            <code class="ruby"># people_quantity: string, number of people the recipie is made for</code>
+            <code class="ruby"># difficulty: string, indicate the category of difficulty according to the website</code>
           </li>
         </div>
       
@@ -1355,7 +1355,7 @@
 
             
 
-            <code class="ruby"># budget: string, indicate the category of budget according to the website</code>
+            <code class="ruby"># rate: string, rate of the recipe out of 5</code>
           </li>
         </div>
       
@@ -1366,7 +1366,7 @@
 
             
 
-            <code class="ruby"># difficulty: string, indicate the category of difficulty according to the website</code>
+            <code class="ruby"># author_tip: string, note or tip left by the author</code>
           </li>
         </div>
       
@@ -1377,7 +1377,7 @@
 
             
 
-            <code class="ruby"># rate: string, rate of the recipe out of 5</code>
+            <code class="ruby"># tags: string list, tags of the recipe</code>
           </li>
         </div>
       
@@ -1388,34 +1388,12 @@
 
             
 
-            <code class="ruby"># author_tip: string, note or tip left by the author</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="47">
-            
-            
-
-            
-
-            <code class="ruby"># tags: string list, tags of the recipe</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="48">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="49">
+          <li class="covered" data-hits="1" data-linenumber="47">
             <span class="hits">1</span>
             
 
@@ -1426,7 +1404,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="50">
+          <li class="never" data-hits="" data-linenumber="48">
             
             
 
@@ -1437,7 +1415,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="51">
+          <li class="covered" data-hits="1" data-linenumber="49">
             <span class="hits">1</span>
             
 
@@ -1448,7 +1426,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="52">
+          <li class="covered" data-hits="5" data-linenumber="50">
             <span class="hits">5</span>
             
 
@@ -1459,7 +1437,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="53">
+          <li class="never" data-hits="" data-linenumber="51">
             
             
 
@@ -1470,18 +1448,18 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="54">
+          <li class="never" data-hits="" data-linenumber="52">
             
             
 
             
 
-            <code class="ruby">      ingredients.join(&#39; &amp; &#39;)</code>
+            <code class="ruby">      ingredients.join(&#39; | &#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="55">
+          <li class="never" data-hits="" data-linenumber="53">
             
             
 
@@ -1492,7 +1470,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="56">
+          <li class="never" data-hits="" data-linenumber="54">
             
             
 
@@ -1503,7 +1481,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="57">
+          <li class="never" data-hits="" data-linenumber="55">
             
             
 
@@ -1514,7 +1492,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="58">
+          <li class="never" data-hits="" data-linenumber="56">
             
             
 
@@ -1525,7 +1503,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="59">
+          <li class="never" data-hits="" data-linenumber="57">
             
             
 
@@ -1536,7 +1514,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="60">
+          <li class="covered" data-hits="1" data-linenumber="58">
             <span class="hits">1</span>
             
 
@@ -1547,7 +1525,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="9" data-linenumber="61">
+          <li class="covered" data-hits="9" data-linenumber="59">
             <span class="hits">9</span>
             
 
@@ -1558,7 +1536,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="62">
+          <li class="covered" data-hits="8" data-linenumber="60">
             <span class="hits">8</span>
             
 
@@ -1569,7 +1547,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="63">
+          <li class="covered" data-hits="8" data-linenumber="61">
             <span class="hits">8</span>
             
 
@@ -1580,7 +1558,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="64">
+          <li class="never" data-hits="" data-linenumber="62">
             
             
 
@@ -1591,7 +1569,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="65">
+          <li class="never" data-hits="" data-linenumber="63">
             
             
 
@@ -1602,7 +1580,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="66">
+          <li class="covered" data-hits="8" data-linenumber="64">
             <span class="hits">8</span>
             
 
@@ -1613,7 +1591,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="67">
+          <li class="covered" data-hits="8" data-linenumber="65">
             <span class="hits">8</span>
             
 
@@ -1624,7 +1602,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="68">
+          <li class="covered" data-hits="8" data-linenumber="66">
             <span class="hits">8</span>
             
 
@@ -1635,7 +1613,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="69">
+          <li class="never" data-hits="" data-linenumber="67">
             
             
 
@@ -1646,7 +1624,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="70">
+          <li class="covered" data-hits="8" data-linenumber="68">
             <span class="hits">8</span>
             
 
@@ -1657,7 +1635,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="71">
+          <li class="never" data-hits="" data-linenumber="69">
             
             
 
@@ -1668,7 +1646,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="72">
+          <li class="covered" data-hits="1" data-linenumber="70">
             <span class="hits">1</span>
             
 
@@ -1679,7 +1657,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="73">
+          <li class="covered" data-hits="1" data-linenumber="71">
             <span class="hits">1</span>
             
 
@@ -1690,7 +1668,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="74">
+          <li class="never" data-hits="" data-linenumber="72">
             
             
 
@@ -1701,7 +1679,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="75">
+          <li class="never" data-hits="" data-linenumber="73">
             
             
 
@@ -2480,8 +2458,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5282" data-linenumber="68">
-            <span class="hits">5282</span>
+          <li class="covered" data-hits="5218" data-linenumber="68">
+            <span class="hits">5218</span>
             
 
             
@@ -2491,8 +2469,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="69">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="1" data-linenumber="69">
+            <span class="hits">1</span>
             
 
             
@@ -2843,8 +2821,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="101">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="7" data-linenumber="101">
+            <span class="hits">7</span>
             
 
             
